@@ -1,0 +1,121 @@
+ * {
+     font-family: 'Cairo', sans-serif;
+     padding: 0;
+     margin: 0;
+
+ }
+
+ body {
+     background-image: url(1.png);
+     background: linear-gradient(to right, #74d1ff98, #7cdeff86);
+     background-size: cover;
+     margin: 0;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+ }
+
+ .logo {
+     display: block;
+     margin: 0 auto 20px;
+     /* وسط الصورة */
+     width: 300px;
+     /* عرض الصورة */
+     height: auto;
+     /* ارتفاع الصورة بشكل تلقائي */
+     max-width: 100%;
+     /* تأكد من أن الصورة لا تخرج من الديف */
+     max-height: 100px;
+     /* يمكن ضبط ارتفاع الصورة حسب الحاجة */
+ }
+
+ .login-container {
+     background-color: #ffffff;
+     border-radius: 8px;
+     padding: 20px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.548);
+     max-width: 400px;
+     width: 100%;
+     text-align: center;
+     box-sizing: border-box;
+ }
+
+ h1 {
+     color: #333;
+     font-size: 1.5em;
+     margin-bottom: 20px;
+ }
+
+ input[type="text"] {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 35px;
+     border: 1px solid #ccc;
+     border-radius: 20px;
+     font-size: 1em;
+     box-sizing: border-box;
+     text-align: right;
+ }
+
+ button {
+     background: linear-gradient(to right, #0077ff, #50e3c2);
+     color: white;
+     border: none;
+     padding: 10px 15px;
+     font-size: 1em;
+     border-radius: 4px;
+     cursor: pointer;
+     width: 100%;
+     transition: background 0.3s, color 0.3s;
+     /* تأثير الانتقال على الخلفية واللون */
+ }
+
+ button:hover {
+     background: linear-gradient(to right, #000000fb, #000000);
+     color: #ffffff;
+ }
+
+ #result {
+     margin-top: 20px;
+     padding: 15px;
+     background-color: #00a6ff75;
+     border-radius: 4px;
+     font-size: 1em;
+     color: #000000;
+     line-height: 1.6;
+     display: none;
+
+ }
+
+ .p {
+     color: #000000;
+     font-size: 1.0em;
+ }
+
+ footer {
+     text-align: center;
+     background-color: #0088ff87;
+     width: auto;
+     height: auto;
+     color: #000000;
+     margin: 35px 20px 10px 10px;
+     border-radius: 77px;
+ }
+
+ footer a {
+     text-decoration: none;
+     color: #000000;
+ }
+
+ /* متجاوب مع الشاشات الصغيرة */
+ @media (max-width: 768px) {
+     h1 {
+         font-size: 1.2em;
+     }
+
+     input[type="text"],
+     button {
+         font-size: 0.9em;
+     }
+ }
