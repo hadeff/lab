@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرفة رقم المجموعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div class="login-container">
+        <img src="2.png" alt="لوجو" class="logo"> <!-- استبدل المسار بالصورة الخاصة بك -->
+        <h1>معرفة رقم المجموعة</h1>
+        <form id="lab-form">
+            <input type="text" id="student-code" placeholder="ادخل الكود الخاص بك" required>
+            <button type="submit" id="add-btn">بحث</button>
+        </form>
+        <div id="result"></div>
+        <br>
+        <footer>
+            <p>By : <a href="https://www.facebook.com/ahmedabdullah107" target="_blank">Ahmed Abdullah</a></p>
+        </footer>
+        <p class="p">الحاسبات ونظم المعلومات الادارية</p>
+
+    </div>
+    <script>
+    const labs = [
+        // بيانات الفرقة الأولى
+        { from: 202410001, to: 202410125, lab: 1, group: '1', division: 'الفرقة الأولى' },
+        { from: 202410126, to: 202410250, lab: 2, group: '1', division: 'الفرقة الأولى' },
+        { from: 202410251, to: 202410375, lab: 3, group: '1', division: 'الفرقة الأولى' },
+        { from: 202410376, to: 202410500, lab: 4, group: '1', division: 'الفرقة الأولى' },
+        
+        { from: 202410501, to: 202410625, lab: 1, group: '2', division: 'الفرقة الأولى' },
+        { from: 202410626, to: 202410750, lab: 2, group: '2', division: 'الفرقة الأولى' },
+        { from: 202410751, to: 202410875, lab: 3, group: '2', division: 'الفرقة الأولى' },
+        { from: 202410876, to: 202411000, lab: 4, group: '2', division: 'الفرقة الأولى' },
+        
+        { from: 202411001, to: 202411125, lab: 1, group: '3', division: 'الفرقة الأولى' },
+        { from: 202411126, to: 202411250, lab: 2, group: '3', division: 'الفرقة الأولى' },
+        { from: 202411251, to: 202411375, lab: 3, group: '3', division: 'الفرقة الأولى' },
+        { from: 202411376, to: 202411500, lab: 4, group: '3', division: 'الفرقة الأولى' },
+        
+        { from: 202411501, to: 202411625, lab: 1, group: '4', division: 'الفرقة الأولى' },
+        { from: 202411626, to: 202411750, lab: 2, group: '4', division: 'الفرقة الأولى' },
+        { from: 202411751, to: 202411875, lab: 3, group: '4', division: 'الفرقة الأولى' },
+        { from: 202411876, to: 202412000, lab: 4, group: '4', division: 'الفرقة الأولى' },
+        
+        { from: 202412001, to: 202412125, lab: 1, group: '5', division: 'الفرقة الأولى' },
+        { from: 202412126, to: 202412250, lab: 2, group: '5', division: 'الفرقة الأولى' },
+        { from: 202412251, to: 202412375, lab: 3, group: '5', division: 'الفرقة الأولى' },
+        { from: 202412376, to: 202412500, lab: 4, group: '5', division: 'الفرقة الأولى' },
+
+        // بيانات الفرقة الثالثة
+        { from: 202210001, to: 202210109, lab: 1, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210111, to: 202210217, lab: 2, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210218, to: 202210323, lab: 3, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210324, to: 202210425, lab: 4, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210426, to: 202210551, lab: 5, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210553, to: 202210661, lab: 6, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210663, to: 202210778, lab: 7, group: '1', division: 'الفرقة الثالثة' },
+        { from: 202210779, to: 202210899, lab: 8, group: '1', division: 'الفرقة الثالثة' },
+        
+        { from: 202210902, to: 202211027, lab: 1, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211028, to: 202211143, lab: 2, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211144, to: 202211259, lab: 3, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211260, to: 202211398, lab: 4, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211399, to: 202211517, lab: 5, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211319, to: 202211657, lab: 6, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211658, to: 202211776, lab: 7, group: '2', division: 'الفرقة الثالثة' },
+        { from: 202211777, to: 20230009, lab: 8, group: '2', division: 'الفرقة الثالثة' },
+        
+        { from: 202210011, to: 202210375, lab: 1, group: '3', division: 'الفرقة الثالثة' },
+    ];
+
+    document.getElementById("lab-form").onsubmit = function(e) {
+        e.preventDefault();
+        const code = parseInt(document.getElementById("student-code").value);
+        const result = labs.find(item => code >= item.from && code <= item.to);
+        
+        const resultDiv = document.getElementById("result");
+        if (result) {
+            const labText = result.division === "الفرقة الأولى" ? "سكشن" : "معمل";
+            resultDiv.innerHTML = `${result.division}<br>مجموعة: ${result.group}<br>${labText}: ${result.lab}`;
+            resultDiv.style.display = 'block';
+        } else {
+            resultDiv.textContent = "لم يتم العثور على بيانات لهذا الكود.";
+            resultDiv.style.display = 'block';
+        }
+    };
+    </script>
+</body>
+</html>
