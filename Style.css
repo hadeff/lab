@@ -7,7 +7,7 @@
 
  body {
      background-image: url(1.png);
-     background: linear-gradient(to right, #74d1ff98, #7cdeff86);
+     background-color: #2b73bf;
      background-size: cover;
      margin: 0;
      display: flex;
@@ -59,7 +59,7 @@
  }
 
  button {
-     background: linear-gradient(to right, #0077ff, #50e3c2);
+     background-color: #2b73bf;
      color: white;
      border: none;
      padding: 10px 15px;
