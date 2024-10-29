@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>جدول الفرقة الثالثة</title>
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(to right, #74d1ff98, #7cdeff86);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #000000d4;
+            font-size: 1.5rem;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 100%;
+        }
+        button {
+            background: linear-gradient(to right, #0077ff, #50e3c2);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: linear-gradient(to right, #000000fb, #000000);
+        }
+        .schedule {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .schedule-item {
+            background-color: #e9f6ff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .schedule-item h3 {
+            color: #0056b3;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .schedule-item p {
+            margin: 5px 0;
+            color: #333;
+            font-size: 1rem;
+        }
+        .gro {
+            color: rgb(0, 0, 0);
+            background-color: #068afd3f;
+            border-radius: 4px;
+            margin: 5px;
+            display: block;
+            font-size: 1rem;
+        }
+
+        /* لجعل الموقع متجاوب مع الشاشات المختلفة */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 15px;
+            }
+            .schedule-item h3 {
+                font-size: 1rem;
+            }
+            .schedule-item p {
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            button, select {
+                font-size: 14px;
+            }
+        }
+
+                .logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 300px;
+            height: auto;
+            max-width: 100%;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="2.png" alt="لوجو" class="logo">
+        <h1>جدول الفرقة الثالثة</h1>
+        <label class="gro" for="group">الجدول يعرض المحاضرات التي بتاريخ اليوم فقط بشكل تلقائي</label>
+        <select id="group">
+            <option value="1">مجموعة 1</option>
+            <option value="2">مجموعة 2</option>
+            <option value="3">مجموعة 3</option>
+        </select>
+        <button onclick="showSchedule()">عرض الجدول</button>
+        <div id="schedule" class="schedule"></div>
+    </div>
+
+    <script>
+        const schedules = {
+            1: {
+                "Saturday": [
+                    { title: "تحليل وتصميم نظم المعلومات", location: "مدرج (ج)", time: "من الساعة 9 إلى الساعة 11" },
+                    { title: "تصميم برامج الحاسب الآلي", location: "مدرج (ه)", time: "من الساعة 11 إلى الساعة 1" }
+                ],
+                "Sunday": [
+                    { title: "تطبيقات الحاسب في إعداد التقارير", location: "مدرج (ب)", time: "من الساعة 9 إلى الساعة 11" },
+                    { title: "الإدارة الاستراتيجية", location: "مدرج (د)", time: "من الساعة 1 إلى الساعة 3" }
+                ],
+                "Monday": [
+                    { title: "البنية التحتية لتكنولوجيا المعلومات", location: "مدرج (ج)", time: "من الساعة 11 إلى الساعة 1" }
+                ]
+            },
+            2: {
+                "Saturday": [
+                    { title: "تصميم برامج الحاسب الآلي", location: "مدرج (و)", time: "من الساعة 9 إلى الساعة 11" },
+                    { title: "تحليل وتصميم نظم المعلومات", location: "مدرج (د)", time: "من الساعة 11 إلى الساعة 1" }
+                ],
+                "Sunday": [
+                    { title: "البنية التحتية لتكنولوجيا المعلومات", location: "مدرج (أ)", time: "من الساعة 9 إلى الساعة 11" }
+                ],
+                "Monday": [
+                    { title: "الإدارة الاستراتيجية", location: "مدرج (و)", time: "من الساعة 9 إلى الساعة 11" },
+                    { title: "تطبيقات الحاسب في إعداد التقارير", location: "مدرج (ج)", time: "من الساعة 1 إلى الساعة 3" }
+                ]
+            },
+            3: {
+                "Saturday": [
+                    { title: "تصميم برامج الحاسب الآلي", location: "مدرج (ه)", time: "من الساعة 1 إلى الساعة 3" },
+                    { title: "تطبيقات الحاسب في إعداد التقارير", location: "مدرج (و)", time: "من الساعة 3 إلى الساعة 5" }
+                ],
+                "Tuesday": [
+                    { title: "البنية التحتية لتكنولوجيا المعلومات", location: "مدرج (ج)", time: "من الساعة 1 إلى الساعة 3" }
+                ],
+                "Wednesday": [
+                    { title: "الإدارة الاستراتيجية", location: "مدرج (أ)", time: "من الساعة 9 إلى الساعة 11" }
+                ],
+                "Thursday": [
+                    { title: "تحليل وتصميم نظم المعلومات", location: "مدرج (ب)", time: "من الساعة 9 إلى الساعة 11" }
+                ]
+            }
+        };
+
+        function showSchedule() {
+            const group = document.getElementById("group").value;
+            const today = new Date().toLocaleDateString("en-US", { weekday: 'long' });
+            const schedule = schedules[group][today];
+            const scheduleContainer = document.getElementById("schedule");
+            scheduleContainer.innerHTML = '';
+
+            if (schedule && schedule.length > 0) {
+                schedule.forEach(item => {
+                    const scheduleItem = document.createElement("div");
+                    scheduleItem.className = "schedule-item";
+                    scheduleItem.innerHTML = `
+                        <h3>${item.title}</h3>
+                        <p><strong>المكان:</strong> ${item.location}</p>
+                        <p><strong>الوقت:</strong> ${item.time}</p>
+                    `;
+                    scheduleContainer.appendChild(scheduleItem);
+                });
+            } else {
+                scheduleContainer.innerHTML = "<p>لا توجد محاضرات لهذا اليوم</p>";
+            }
+        }
+    </script>
+</body>
+</html>
