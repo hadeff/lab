@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>جدول المعمل للفرقة الثالثة - مجموعة 1</title>
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #2b73bf;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #000000d4;
+            font-size: 1.5rem;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 100%;
+        }
+        button {
+            background-color: #2b73bf;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: linear-gradient(to right, #000000fb, #000000);
+        }
+        .schedule {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .schedule-item {
+            background-color: #e9f6ff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .schedule-item h3 {
+            color: #0056b3;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .schedule-item p {
+            margin: 5px 0;
+            color: #333;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>جدول المعمل للفرقة الثالثة - مجموعة 1</h1>
+
+        <select id="lab">
+            <option value="1">مجموعة معمل 1</option>
+            <option value="2">مجموعة معمل 2</option>
+            <option value="3">مجموعة معمل 3</option>
+            <option value="4">مجموعة معمل 4</option>
+            <option value="5">مجموعة معمل 5</option>
+            <option value="6">مجموعة معمل 6</option>
+            <option value="7">مجموعة معمل 7</option>
+            <option value="8">مجموعة معمل 8</option>
+        </select>
+
+        <button onclick="showSchedule()">عرض الجدول</button>
+        <div id="schedule" class="schedule"></div>
+    </div>
+
+    <script>
+        const schedules = {
+            "1": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "2": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "3": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "4": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "5": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "6": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "7": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ },
+            "8": { /* ... محتوى الجدول هنا كما في الكود السابق ... */ }
+        };
+
+        function getArabicDay() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const arabicDays = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+            const today = new Date().getDay();
+            return days[today];
+        }
+
+        function showSchedule() {
+            const lab = document.getElementById("lab").value;
+            const day = getArabicDay();
+            const schedule = schedules[lab][day];
+            const scheduleContainer = document.getElementById("schedule");
+            scheduleContainer.innerHTML = '';
+
+            if (schedule && schedule.length > 0) {
+                schedule.forEach(item => {
+                    const scheduleItem = document.createElement("div");
+                    scheduleItem.className = "schedule-item";
+                    scheduleItem.innerHTML = `
+                        <h3>${item.title}</h3>
+                        <p><strong>المكان:</strong> ${item.location}</p>
+                        <p><strong>الوقت:</strong> ${item.time}</p>
+                    `;
+                    scheduleContainer.appendChild(scheduleItem);
+                });
+            } else {
+                scheduleContainer.innerHTML = "<p>لا توجد محاضرات لهذا اليوم</p>";
+            }
+        }
+    </script>
+</body>
+</html>
