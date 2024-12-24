@@ -33,7 +33,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>مرحباً بكم في الموقع المحمي</h1>
+            <h1>مرحبا بكم</h1>
             <p id="message">جارٍ التحقق من صلاحية الوصول...</p>
         </div>
 
@@ -60,7 +60,7 @@
                 // التحقق من الـ IP
                 if (allowedIPs.includes(userIP)) {
                     document.getElementById("message").innerHTML = 
-                        '<span class="success">تم السماح بالدخول! أهلاً وسهلاً!</span>';
+                        '<span class="success">تم السماح بالدخولً!</span>';
                 } else {
                     document.getElementById("message").innerHTML = 
                         `<span class="error">تم رفض الوصول!</span> عنوان الـ IP الخاص بك (${userIP}) غير مصرح به.`;
