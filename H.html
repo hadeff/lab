@@ -101,8 +101,14 @@
 
     document.getElementById('exam-form').addEventListener('submit', function(event) {
         event.preventDefault();
-        const studentCode = parseInt(document.getElementById('student-code').value);
+        const studentCode = parseInt(document.getElementById('student-code').value, 10);
         const result = document.getElementById('result');
+
+        if (isNaN(studentCode)) {
+            result.textContent = 'الرجاء إدخال كود الطالب بشكل صحيح.';
+            return;
+        }
+
         const committee = committees.find(c => studentCode >= c.from && studentCode <= c.to);
 
         if (committee) {
