@@ -118,6 +118,8 @@
     <div class="container">
         <img src="2.png" alt="لوجو" class="logo"> <!-- استبدل المسار بالصورة الخاصة بك -->
         <h1>الاستعلام عن مكان الامتحان</h1>
+        <p>ملوحظة اكواد الفترة المسائية غير كاملة بسبب الاخطاء</p>
+        <p>اذا واجهت مشكلة راجع الجدول</p>
         <input type="text" id="studentCode" placeholder="ادخل الكود الخاص بك" onkeydown="checkEnter(event)">
         <button onclick="findExamDetails()">استعلام</button>
         <div class="result" id="result"></div>
@@ -158,6 +160,16 @@
             { range: [202211240, 202211287], hall: 'قاعة (7)', committee: 31, period: 'صباحية' },
             { range: [202211288, 202211335], hall: 'قاعة (8)', committee: 32, period: 'صباحية' },
             { range: [202211337, 202211385], hall: 'قاعة (9)', committee: 33, period: 'صباحية' },
+            { range: [202211387, 202211438], hall: 'مدرج (أ)', committee: 1, period: 'مسائية' },
+            { range: [202211439, 202211477], hall: 'مدرج (أ)', committee: 2, period: 'مسائية' },
+            { range: [202211478, 202211519], hall: 'مدرج (أ)', committee: 3, period: 'مسائية' },
+            { range: [202211520, 202211578], hall: 'مدرج (أ)', committee: 4, period: 'مسائية' },
+            { range: [202211579, 202211621], hall: 'مدرج (ب)', committee: 5, period: 'مسائية' },
+            { range: [202211622, 202211671], hall: 'مدرج (ب)', committee: 6, period: 'مسائية' },
+            { range: [202211675, 202211729], hall: 'مدرج (ب)', committee: 7, period: 'مسائية' },
+            { range: [202211731, 202211769], hall: 'مدرج (ب)', committee: 8, period: 'مسائية' },
+            { range: [202211770, 202211818], hall: 'مدرج (ج)', committee: 9, period: 'مسائية' },
+            { range: [202211822, 202211908], hall: 'مدرج (ج)', committee: 10, period: 'مسائية' },
         ];
 
         function findExamDetails() {
