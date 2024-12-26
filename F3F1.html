@@ -36,15 +36,10 @@
             .logo {
          display: block;
          margin: 0 auto 20px;
-         /* وسط الصورة */
          width: 300px;
-         /* عرض الصورة */
          height: auto;
-         /* ارتفاع الصورة بشكل تلقائي */
          max-width: 100%;
-         /* تأكد من أن الصورة لا تخرج من الديف */
          max-height: 100px;
-         /* يمكن ضبط ارتفاع الصورة حسب الحاجة */
      }
 
         h1 {
@@ -123,7 +118,7 @@
     <div class="container">
         <img src="2.png" alt="لوجو" class="logo"> <!-- استبدل المسار بالصورة الخاصة بك -->
         <h1>الاستعلام عن مكان الامتحان</h1>
-        <input type="text" id="studentCode" placeholder="ادخل الكود الخاص بك">
+        <input type="text" id="studentCode" placeholder="ادخل الكود الخاص بك" onkeydown="checkEnter(event)">
         <button onclick="findExamDetails()">استعلام</button>
         <div class="result" id="result"></div>
     </div>
@@ -163,7 +158,6 @@
             { range: [202211240, 202211287], hall: 'قاعة (7)', committee: 31, period: 'صباحية' },
             { range: [202211288, 202211335], hall: 'قاعة (8)', committee: 32, period: 'صباحية' },
             { range: [202211337, 202211385], hall: 'قاعة (9)', committee: 33, period: 'صباحية' },
-            // باقي البيانات للفترة المسائية...
         ];
 
         function findExamDetails() {
@@ -181,6 +175,12 @@
             } else {
                 resultDiv.innerHTML = '<p>الكود غير موجود!</p>';
                 resultDiv.style.display = 'block';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                findExamDetails();
             }
         }
     </script>
