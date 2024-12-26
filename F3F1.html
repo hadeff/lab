@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرفة مكان الامتحان</title>
+    <title>الاستعلام عن مكان الامتحان</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -120,9 +120,15 @@
         <h1>الاستعلام عن مكان الامتحان</h1>
         <p>ملوحظة اكواد الفترة المسائية غير كاملة بسبب الاخطاء</p>
         <p>اذا واجهت مشكلة راجع الجدول</p>
+        <pr>
         <input type="text" id="studentCode" placeholder="ادخل الكود الخاص بك" onkeydown="checkEnter(event)">
         <button onclick="findExamDetails()">استعلام</button>
         <div class="result" id="result"></div>
+
+         <footer>
+            <p>by: <a href="https://www.facebook.com/ahmedabdullah107"> Ahmed Abdullah </p>
+         </footer>
+            
     </div>
 
     <script>
