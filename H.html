@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرفة مكان لجنة الامتحان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div class="login-container">
+        <img src="2.png" alt="لوجو" class="logo"> <!-- استبدل المسار بالصورة الخاصة بك -->
+        <h1>معرفة مكان لجنة الامتحان</h1>
+        <form id="exam-form">
+            <input type="text" id="student-code" placeholder="ادخل الكود الخاص بك" required>
+            <button type="submit">بحث</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const committees = [
+            // الفترة الصباحية
+            { from: 202210001, to: 202210036, hall: 'مدرج (أ)', committee: 1, time: '10:00 - 12:00' },
+            { from: 202210037, to: 202210075, hall: 'مدرج (أ)', committee: 2, time: '10:00 - 12:00' },
+            { from: 202210076, to: 202210116, hall: 'مدرج (أ)', committee: 3, time: '10:00 - 12:00' },
+            { from: 202210119, to: 202210161, hall: 'مدرج (أ)', committee: 4, time: '10:00 - 12:00' },
+
+            { from: 202210162, to: 202210196, hall: 'مدرج (ب)', committee: 5, time: '10:00 - 12:00' },
+            { from: 202210197, to: 202210237, hall: 'مدرج (ب)', committee: 6, time: '10:00 - 12:00' },
+            { from: 202210238, to: 202210274, hall: 'مدرج (ب)', committee: 7, time: '10:00 - 12:00' },
+            { from: 202210275, to: 202210314, hall: 'مدرج (ب)', committee: 8, time: '10:00 - 12:00' },
+
+            // ... باقي البيانات للفترة الصباحية والمسائية
+        ];
+
+        document.getElementById("exam-form").onsubmit = function(e) {
+            e.preventDefault();
+            const code = parseInt(document.getElementById("student-code").value);
+            const result = committees.find(item => code >= item.from && code <= item.to);
+
+            const resultDiv = document.getElementById("result");
+            if (result) {
+                resultDiv.innerHTML = `
+                    <p>الفترة: ${result.time}</p>
+                    <p>المكان: ${result.hall}</p>
+                    <p>لجنة: ${result.committee}</p>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.textContent = "لم يتم العثور على بيانات لهذا الكود.";
+                resultDiv.style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>
