@@ -104,13 +104,16 @@
         const studentCode = parseInt(document.getElementById('student-code').value, 10);
         const result = document.getElementById('result');
 
-        if (isNaN(studentCode)) {
+        // التحقق من إدخال صحيح للكود
+        if (isNaN(studentCode) || studentCode <= 0) {
             result.textContent = 'الرجاء إدخال كود الطالب بشكل صحيح.';
             return;
         }
 
+        // البحث عن الكود في القائمة
         const committee = committees.find(c => studentCode >= c.from && studentCode <= c.to);
 
+        // إذا تم العثور على الكود
         if (committee) {
             result.textContent = `مكانك: ${committee.hall}, اللجنة: ${committee.committee}, الفترة: ${committee.time}`;
         } else {
