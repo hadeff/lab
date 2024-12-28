@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستعلام عن مكان الامتحان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: #2b73bf;
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.548);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+            .logo {
+         display: block;
+         margin: 0 auto 20px;
+         width: 300px;
+         height: auto;
+         max-width: 100%;
+         max-height: 100px;
+     }
+
+        h1 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 35px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 1em;
+            box-sizing: border-box;
+            text-align: right;
+        }
+
+        p{
+             font-size: 15px;
+        }
+
+        button {
+            background-color: #2b73bf;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #000000fb, #000000);
+            color: #ffffff;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #00a6ff75;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #000000;
+            line-height: 1.6;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #0088ff87;
+            width: auto;
+            height: auto;
+            color: #000000;
+            margin: 35px 20px 10px 10px;
+            border-radius: 77px;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            input[type="text"],
+            button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="2.png" alt="لوجو" class="logo"> <!-- استبدل المسار بالصورة الخاصة بك -->
+        <h1>الاستعلام عن مكان الامتحان</h1>
+        <input type="text" id="studentCode" placeholder="ادخل الكود الخاص بك" onkeydown="checkEnter(event)">
+        <button onclick="findExamDetails()">استعلام</button>
+        <div class="result" id="result"></div>
+
+         <footer>
+            <p>by: <a href="https://www.facebook.com/ahmedabdullah107"> Ahmed Abdullah </p>
+         </footer>
+            
+    </div>
+
+    <script>
+					const examData = [
+				// الفترة الصباحية
+				{ range: [202310001, 202310031], hall: 'مدرج (أ)', committee: 1, period: 'صباحية' },
+				{ range: [202310032, 202310063], hall: 'مدرج (أ)', committee: 2, period: 'صباحية' },
+				{ range: [202310065, 202310096], hall: 'مدرج (أ)', committee: 3, period: 'صباحية' },
+				{ range: [202310097, 202310129], hall: 'مدرج (أ)', committee: 4, period: 'صباحية' },
+				{ range: [202310130, 202310160], hall: 'مدرج (ب)', committee: 5, period: 'صباحية' },
+				{ range: [202310161, 202310194], hall: 'مدرج (ب)', committee: 6, period: 'صباحية' },
+				{ range: [202310195, 202310224], hall: 'مدرج (ب)', committee: 7, period: 'صباحية' },
+				{ range: [202310225, 202310255], hall: 'مدرج (ب)', committee: 8, period: 'صباحية' },
+				{ range: [202310256, 202310287], hall: 'مدرج (ج)', committee: 9, period: 'صباحية' },
+				{ range: [202310289, 202310319], hall: 'مدرج (ج)', committee: 10, period: 'صباحية' },
+				{ range: [202310320, 202310353], hall: 'مدرج (ج)', committee: 11, period: 'صباحية' },
+				{ range: [202310354, 202310390], hall: 'مدرج (ج)', committee: 12, period: 'صباحية' },
+				{ range: [202310391, 202310426], hall: 'مدرج (د)', committee: 13, period: 'صباحية' },
+				{ range: [202310427, 202310463], hall: 'مدرج (د)', committee: 14, period: 'صباحية' },
+				{ range: [202310464, 202310509], hall: 'مدرج (د)', committee: 15, period: 'صباحية' },
+				{ range: [202310510, 202310544], hall: 'مدرج (د)', committee: 16, period: 'صباحية' },
+				{ range: [202310545, 202310584], hall: 'مدرج (ھ)', committee: 17, period: 'صباحية' },
+				{ range: [202310585, 202310618], hall: 'مدرج (ھ)', committee: 18, period: 'صباحية' },
+				{ range: [202310619, 202310653], hall: 'مدرج (ھ)', committee: 19, period: 'صباحية' },
+				{ range: [202310654, 202310687], hall: 'مدرج (ھ)', committee: 20, period: 'صباحية' },
+				{ range: [202310690, 202310724], hall: 'مدرج (و)', committee: 21, period: 'صباحية' },
+				{ range: [202310725, 202310761], hall: 'مدرج (و)', committee: 22, period: 'صباحية' },
+				{ range: [202310762, 202310797], hall: 'مدرج (و)', committee: 23, period: 'صباحية' },
+				{ range: [202310798, 202310827], hall: 'مدرج (و)', committee: 24, period: 'صباحية' },
+				{ range: [202310828, 202310860], hall: 'قاعة (1)', committee: 25, period: 'صباحية' },
+				{ range: [202310861, 202310892], hall: 'قاعة (2)', committee: 26, period: 'صباحية' },
+				{ range: [202310893, 202310924], hall: 'قاعة (3)', committee: 27, period: 'صباحية' },
+				{ range: [202310926, 202310957], hall: 'قاعة (4)', committee: 28, period: 'صباحية' },
+				{ range: [202310958, 202310992], hall: 'قاعة (5)', committee: 29, period: 'صباحية' },
+				{ range: [202310993, 202311023], hall: 'قاعة (6)', committee: 30, period: 'صباحية' },
+				{ range: [202311024, 202311054], hall: 'قاعة (7)', committee: 31, period: 'صباحية' },
+				{ range: [202311055, 202311086], hall: 'قاعة (8)', committee: 32, period: 'صباحية' },
+				{ range: [202311087, 202311120], hall: 'قاعة (9)', committee: 33, period: 'صباحية' },
+
+				// الفترة المسائية
+				{ range: [202311121, 202311155], hall: 'مدرج (أ)', committee: 1, period: 'مسائية' },
+				{ range: [202311157, 202311191], hall: 'مدرج (أ)', committee: 2, period: 'مسائية' },
+				{ range: [202311192, 202311228], hall: 'مدرج (أ)', committee: 3, period: 'مسائية' },
+				{ range: [202311229, 202311269], hall: 'مدرج (أ)', committee: 4, period: 'مسائية' },
+				{ range: [202311272, 202311312], hall: 'مدرج (ب)', committee: 5, period: 'مسائية' },
+				{ range: [202311313, 202311354], hall: 'مدرج (ب)', committee: 6, period: 'مسائية' },
+				{ range: [202311355, 202311391], hall: 'مدرج (ب)', committee: 7, period: 'مسائية' },
+				{ range: [202311392, 202311428], hall: 'مدرج (ب)', committee: 8, period: 'مسائية' },
+				{ range: [202311429, 202311459], hall: 'مدرج (ج)', committee: 9, period: 'مسائية' },
+				{ range: [202311460, 202311509], hall: 'مدرج (ج)', committee: 10, period: 'مسائية' },
+				{ range: [202311510, 202311547], hall: 'مدرج (ج)', committee: 11, period: 'مسائية' },
+				{ range: [202311548, 202420002], hall: 'مدرج (ج)', committee: 12, period: 'مسائية' },
+				{ range: [202420003, 202420031], hall: 'مدرج (د)', committee: 13, period: 'مسائية' },
+				{ range: [202420032, 202420047], hall: 'مدرج (د)', committee: 14, period: 'مسائية' }
+			];
+
+
+        function findExamDetails() {
+            const studentCode = parseInt(document.getElementById('studentCode').value);
+            const resultDiv = document.getElementById('result');
+            const examInfo = examData.find(data => studentCode >= data.range[0] && studentCode <= data.range[1]);
+
+            if (examInfo) {
+                resultDiv.innerHTML = `
+                    <p>مكان الامتحان: ${examInfo.hall}</p>
+                    <p>رقم اللجنة: ${examInfo.committee}</p>
+                    <p>الفترة: ${examInfo.period}</p>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.innerHTML = '<p>الكود غير موجود!</p>';
+                resultDiv.style.display = 'block';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                findExamDetails();
+            }
+        }
+    </script>
+</body>
+</html>
