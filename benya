@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>أسئلة صح وخطأ بنية تحتية</title>
+    <style>
+	
+		* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: 'Cairo', sans-serif;
+			}
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            font-size: 28px;
+            color: #2b73bf;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .question h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .question input {
+            margin-left: 10px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #2b73bf;;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+        }
+        button:hover {
+            background-color: #2b53bf;
+        }
+        .result {
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2b73bf;
+            text-align: center;
+            display: none;
+        }
+        .result span {
+            font-size: 30px;
+        }
+        .question input[type="radio"]:focus {
+            outline: none;
+            border: 2px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>اختبار الأسئلة</h1>
+    <form id="quizForm">
+        <!-- الأسئلة ستتم إضافتها هنا باستخدام JavaScript -->
+    </form>
+
+    <button type="button" onclick="calculateResult()">عرض النتيجة</button>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        const questions = [
+            { number: 1, text: "من خصائص المعلومات القيمة أن تكون دقيقة وخالية من الأخطاء.", answer: false },
+            { number: 2, text: "نظام المعلومات هو مجموعة من العناصر التي تقوم بجمع ومعالجة وتخزين البيانات وإخراج المعلومات.", answer: false },
+            { number: 3, text: "من خصائص المعلومات القيمة أن تكون آمنة من الوصول من قبل المستخدمين غير المصرح لهم.", answer: true },
+            { number: 4, text: "البنية التحتية لتكنولوجيا المعلومات تشمل الخدمات التقنية والبشرية.", answer: true },
+            { number: 5, text: "في عصر حوسبة العميل الخادم، تُسمى أجهزة الكمبيوتر المحمولة أو المكتبية العملاء.", answer: true },
+            { number: 6, text: "قانون التخزين الشامل ينص على تضاعف قوة الحوسبة كل 18 شهرًا.", answer: false },
+            { number: 7, text: "العلاقة بين عدد الترانزستورات على المعالج الدقيق وقوة الحوسبة تُقاس بملايين التعليمات في الثانية (MIPS).", answer: true },
+            { number: 8, text: "خدمات الاتصالات تشمل توفير بيئة رقمية للعملاء والموردين.", answer: false },
+            { number: 9, text: "خدمات إدارة البيانات المؤسسية تشمل تخزين البيانات وتحليلها.", answer: true },
+            { number: 10, text: "مرونة البنية التحتية لتكنولوجيا المعلومات تعتمد على التطور المستمر للمنتجات التقنية.", answer: true },
+            { number: 11, text: "مصطلح \"البنية التحتية لتكنولوجيا المعلومات\" و\"تكنولوجيا المعلومات\" ليسا متضادين.", answer: false },
+            { number: 12, text: "إدارة البنية التحتية لتكنولوجيا المعلومات تشمل التنبؤ بالمخاطر المستقبلية.", answer: false },
+            { number: 13, text: "تتكون البنية التحتية لتكنولوجيا المعلومات من سبع مكونات رئيسية.", answer: true },
+            { number: 14, text: "تعتبر منصات الشبكات والاتصالات من مكونات البنية التحتية لتكنولوجيا المعلومات.", answer: false },
+            { number: 15, text: "مهندسو المشاريع مسؤولون عن اتخاذ القرارات الهندسية في المشروع.", answer: false },
+            { number: 16, text: "يعمل مهندسو المؤسسات مع مديري تكنولوجيا المعلومات لمواءمة احتياجات العمل مع التكنولوجيا الحالية والمستقبلية.", answer: true },
+            { number: 17, text: "يعتمد تعريف البنية التحتية على الكتل الإنشائية (Building Blocks).", answer: true },
+            { number: 18, text: "السمات غير الوظيفية تؤثر على تكوين مكونات نظام تكنولوجيا المعلومات.", answer: false },
+            { number: 19, text: "يمكن حساب مدى التوفر باستخدام أنماط التصميم مثل التكرار والتجاوز عن الفشل.", answer: true },
+            { number: 20, text: "يتم التعبير عن الوقت اللازم لعمل الخدمة دون فشل بالساعات باستخدام MTBF.", answer: true },
+            { number: 21, text: "يؤدي تقليل MTTR وزيادة MTBF إلى زيادة التوفر.", answer: true },
+            { number: 22, text: "لتوصيل جهازين كمبيوتر في مكتب واحد، تحتاج إلى شبكة بسيطة.", answer: true },
+            { number: 23, text: "تعتمد الشبكات الرقمية المعاصرة على تقنيات مثل حوسبة العميل-الخادم.", answer: true },
+            { number: 24, text: "البروتوكول هو مجموعة قواعد لنقل البيانات بين الأجهزة.", answer: false },
+            { number: 25, text: "يمكن لجهازين كمبيوتر الاتصال حتى لو كانا يعتمدين على أنظمة مختلفة.", answer: true },
+            { number: 26, text: "نموذج OSI لا يُستخدم لتوصيل الشبكات المختلفة.", answer: false },
+            { number: 27, text: "يتم تحديد نوع الشبكة في طبقة وصل البيانات (Data Link Layer).", answer: false },
+            { number: 28, text: "شبكة Ethernet يمكنها استخدام كابل محوري لتوصيل جميع الأجهزة.", answer: true },
+            { number: 29, text: "تُستخدم شبكة Ethernet لتجنب تصادم البيانات بين الأنظمة.", answer: true },
+            { number: 30, text: "شبكات Wi-Fi تتيح التواصل بين العملاء بدون نقطة وصول.", answer: false },
+            { number: 31, text: "الشبكات اللاسلكية العامة لا تُتيح التنقل بسهولة.", answer: false },
+            { number: 32, text: "يشمل تخزين الكمبيوتر تقنيات مثل NAS وDAS وSAN.", answer: true },
+            { number: 33, text: "أنظمة تخزين الكمبيوتر لا تتضمن سياسات وإجراءات لتخزين البيانات.", answer: false },
+            { number: 34, text: "وقت الاستجابة يقاس بمعدل نقل البيانات.", answer: false },
+            { number: 35, text: "يتم نقل البيانات إلى وسيط التخزين على شكل كتل (Blocks).", answer: true },
+            { number: 36, text: "يمكن استخدام محركات الأقراص الصلبة HDD وSSD في نفس الوقت.", answer: false },
+            { number: 37, text: "أنظمة NAS للتخزين تتطلب اتصالًا فعليًا باستخدام كابل محوري.", answer: false },
+            { number: 38, text: "النسخ الاحتياطي التزايدي (Incremental Backup) يحفظ فقط التغييرات الأخيرة.", answer: true },
+            { number: 39, text: "تتم الأرشفة غالبًا لأسباب تتعلق بالامتثال والتنظيم.", answer: true },
+            { number: 40, text: "توفر السحابة إمكانية توسيع وتقليص الموارد حسب الحاجة.", answer: true },
+            { number: 41, text: "أجهزة التوجيه (Routers) يمكن أن تستخدم أنظمة تشغيل مختلفة.", answer: true },
+            { number: 42, text: "أنظمة RPA لا تعتمد على الذكاء الاصطناعي.", answer: false },
+            { number: 43, text: "الذكاء الاصطناعي يساعد في اتخاذ قرارات استباقية بناءً على تحليلات متقدمة.", answer: true },
+            { number: 44, text: "التخطيط طويل الأمد للبنية التحتية يتجاوز خمس سنوات.", answer: true },
+            { number: 45, text: "الذكاء الاصطناعي لا يتطلب وحدات تخزين ذات أداء عالٍ.", answer: false },
+            { number: 46, text: "تكوين NAS يتطلب ضبط الأمان بشكل دوري.", answer: true },
+            { number: 47, text: "دمج الذكاء الاصطناعي في التخزين يساعد في تحسين كفاءة البحث.", answer: true },
+            { number: 48, text: "استخدام الذكاء الاصطناعي في التخزين لا يشمل التنبؤ بالاحتياجات المستقبلية.", answer: false },
+            { number: 49, text: "الحوسبة السحابية تتضمن توصيل أجهزة الكمبيوتر البعيدة بشبكة جغرافية واسعة.", answer: true },
+            { number: 50, text: "الحوسبة السحابية ليست قادرة على تحسين أدائها ذاتيًا.", answer: false },
+            { number: 51, text: "المعالجات الحديثة تحتوي على نوى متعددة لتحسين الأداء.", answer: true },
+            { number: 52, text: "الأنظمة الافتراضية مثل VMware لا تدعم جميع التطبيقات بشكل جيد.", answer: false },
+            { number: 53, text: "الأنظمة الافتراضية تتمثل في تقسيم الأجهزة إلى جزئين أو أكثر لتشغيل تطبيقات متعددة.", answer: true },
+            { number: 54, text: "التخزين السحابي يحتاج إلى استخدام أجهزة تخزين فزيائية خاصة.", answer: false },
+            { number: 55, text: "يمكن تحسين استقرار الشبكة عبر استخدام تقنيات مثل التصحيح التلقائي.", answer: true },
+            { number: 56, text: "الحوسبة السحابية أصبحت ضرورية في تطبيقات التخزين الكبيرة.", answer: true },
+            { number: 57, text: "أجهزة الكمبيوتر القديمة لا يمكنها التعامل مع البيانات الضخمة.", answer: true },
+            { number: 58, text: "الذاكرة الفلاشية ليست أسرع من الأقراص الصلبة HDD.", answer: false },
+            { number: 59, text: "يمكن تحسين تصميم النظام باستخدام تحليلات البيانات الضخمة.", answer: true },
+            { number: 60, text: "نظام تشغيل الشبكة يعتمد على البروتوكولات لضمان الاتصال بين الأجهزة.", answer: true },
+            { number: 61, text: "كلما زادت سرعة النقل، كلما زاد توفير البيانات.", answer: true },
+            { number: 62, text: "الشبكات السحابية ليست أكثر موثوقية من الشبكات التقليدية.", answer: false },
+            { number: 63, text: "العنصر الرئيسي في البنية التحتية لتكنولوجيا المعلومات هو أداء الشبكة.", answer: true },
+            { number: 64, text: "التخزين السحابي يوفر استهلاكًا أقل للطاقة.", answer: true },
+            { number: 65, text: "الشبكات المحلية (LAN) تحتاج إلى معدات أكثر لتعزيز سرعة الشبكة.", answer: false }
+        ];
+
+        // إضافة الأسئلة إلى النموذج
+        const form = document.getElementById('quizForm');
+        questions.forEach(q => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = `
+                <h3>${q.number}. ${q.text}</h3>
+                <input type="radio" name="q${q.number}" value="true"> ✔ صحيح<br>
+                <input type="radio" name="q${q.number}" value="false"> ✖ خطأ
+            `;
+            form.appendChild(questionDiv);
+        });
+
+        // دالة حساب النتيجة
+        function calculateResult() {
+            let score = 0;
+            questions.forEach(q => {
+                const selectedAnswer = document.querySelector(`input[name="q${q.number}"]:checked`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === (q.answer ? 'true' : 'false')) {
+                        score++;
+                    }
+                }
+            });
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `لقد حصلت على ${score} من ${questions.length}`;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
