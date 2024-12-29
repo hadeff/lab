@@ -162,34 +162,57 @@
 ];
 
 
-        // إضافة الأسئلة إلى النموذج
-        const form = document.getElementById('quizForm');
-        questions.forEach(q => {
-            const questionDiv = document.createElement('div');
-            questionDiv.classList.add('question');
+       const form = document.getElementById("quizForm");
+
+        // Dynamically generate the quiz questions
+        questions.forEach(question => {
+            const questionDiv = document.createElement("div");
+            questionDiv.classList.add("question");
             questionDiv.innerHTML = `
-                <h3>${q.number}. ${q.text}</h3>
-                <input type="radio" name="q${q.number}" value="true"> ✔ صحيح<br>
-                <input type="radio" name="q${q.number}" value="false"> ✖ خطأ
+                <h3> ${question.number}: ${question.text}</h3>
+                <label>
+                    <input type="radio" name="question${question.number}" value="true"> صحيح
+                </label>
+                <label>
+                    <input type="radio" name="question${question.number}" value="false"> خطأ
+                </label>
             `;
             form.appendChild(questionDiv);
         });
 
-        // دالة حساب النتيجة
+        // Calculate result function
         function calculateResult() {
-            let score = 0;
-            questions.forEach(q => {
-                const selectedAnswer = document.querySelector(`input[name="q${q.number}"]:checked`);
+            let correctAnswers = 0;
+            let wrongAnswers = [];
+            
+            questions.forEach(question => {
+                const selectedAnswer = document.querySelector(`input[name="question${question.number}"]:checked`);
                 if (selectedAnswer) {
-                    if (selectedAnswer.value === (q.answer ? 'true' : 'false')) {
-                        score++;
+                    const isCorrect = (selectedAnswer.value === String(question.answer));
+                    if (isCorrect) {
+                        correctAnswers++;
+                    } else {
+                        wrongAnswers.push(question.number);  // Display only the question number
                     }
                 }
             });
 
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `لقد حصلت على ${score} من ${questions.length}`;
-            resultDiv.style.display = 'block';
+            const resultDiv = document.getElementById("result");
+            const wrongAnswersDiv = document.getElementById("wrongAnswers");
+
+            // Show correct answers
+            resultDiv.innerHTML = `النتيجة: <span>${correctAnswers} من 60</span> إجابة صحيحة!`;
+
+            // Show wrong answers
+            if (wrongAnswers.length > 0) {
+                wrongAnswersDiv.style.display = "block";
+                wrongAnswersDiv.innerHTML = `<h3>الأسئلة التي تم الإجابة عليها بشكل خاطئ:</h3><ul>` + 
+                    wrongAnswers.map(answer => `<li>سؤال ${answer}</li>`).join('') + `</ul>`;
+            } else {
+                wrongAnswersDiv.style.display = "none";
+            }
+
+            resultDiv.style.display = "block";
         }
     </script>
 </body>
