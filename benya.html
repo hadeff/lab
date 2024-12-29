@@ -6,13 +6,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <title>أسئلة صح وخطأ بنية تحتية</title>
     <style>
-	
-		* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-				font-family: 'Cairo', sans-serif;
-			}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
         body {
             font-family: Arial, sans-serif;
             direction: rtl;
@@ -86,6 +85,7 @@
     <button type="button" onclick="calculateResult()">عرض النتيجة</button>
 
     <div id="result" class="result"></div>
+    <div id="wrongAnswers" class="result" style="display: none;"></div>
 
     <script>
         const questions = [
@@ -161,8 +161,7 @@
     { number: 70, text: "تخزين البيانات باستخدام أنظمة NAS يشمل دمج تقنيات الذكاء الاصطناعي.", answer: true }
 ];
 
-
-       const form = document.getElementById("quizForm");
+        const form = document.getElementById("quizForm");
 
         // Dynamically generate the quiz questions
         questions.forEach(question => {
